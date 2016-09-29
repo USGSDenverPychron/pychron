@@ -205,7 +205,7 @@ class RestartAction(PAction):
 
 
 class WebAction(PAction):
-    def _open_url(self, url):
+    def _open_url(self, url, test=True):
 
         import webbrowser
         import urllib2
@@ -214,7 +214,8 @@ class WebAction(PAction):
             urllib2.urlopen(url)
         except (urllib2.HTTPError, urllib2.URLError), e:
             print 'web action url:{} exception:{}'.format(url, e)
-            return
+            if test:
+                return
 
         webbrowser.open_new(url)
         return True
@@ -234,9 +235,8 @@ class IssueAction(WebAction):
         if not name:
             information(event.task.window.control, 'Please set an "Organziation" in General Preferences')
             return
-
         url = 'https://github.com/{}/pychron/issues/new'.format(name)
-        self._open_url(url)
+        self._open_url(url, False)
 
 
 class NoteAction(WebAction):
