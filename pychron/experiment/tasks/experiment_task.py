@@ -160,7 +160,11 @@ class ExperimentEditorTask(EditorTask):
         for c in ('success', 'extraction', 'measurement', 'canceled', 'truncated',
                   'failed', 'end_after', 'invalid'):
             v = self.application.preferences.get('pychron.experiment.{}_color'.format(c))
-            colors[c] = '#{:02X}{:02X}{:02X}'.format(*toTuple(v)[:3])
+            if v:
+                colors[c] = '#{:02X}{:02X}{:02X}'.format(*toTuple(v)[:3])
+            else:
+                colors[c]='#FFFFFF'
+
         return colors
 
     def new(self):

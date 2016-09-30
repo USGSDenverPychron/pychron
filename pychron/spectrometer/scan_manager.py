@@ -266,7 +266,8 @@ class ScanManager(StreamGraphManager):
         elif self._prev_signals is not None:
             try:
                 test = (signals == self._prev_signals).all()
-            except TypeError:
+            except AttributeError:
+                self.debug('signals={} prev_signals={}'.format(signals, self._prev_signals))
                 test = True
 
             if test:
