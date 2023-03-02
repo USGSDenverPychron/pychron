@@ -22,6 +22,7 @@ from numpy import array, linspace
 
 from pychron.core.yaml import yload
 from pychron.hardware.actuators.gp_actuator import GPActuator
+from pychron.hardware.agilent.actuation_curve_editor import ActuationCurveEditor
 from pychron.paths import paths
 
 
@@ -110,6 +111,11 @@ class U2351A(GPActuator):
             with open(self._actuation_config_path, "r") as wfile:
                 obj = yload(wfile)
                 return obj.get(name)
+
+    def _edit_actuation_curves(self):
+        e = ActuationCurveEditor()
+        e.load(self._actuation_config_path)
+        e.edit_traits()
 
 
 if __name__ == '__main__':
